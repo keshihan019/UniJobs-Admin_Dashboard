@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import { undergraduate, Employee, data } from '../Utils/DummyDataSet';
 
 function UnderDashboard() {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState('UnderGraduate');
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
   };
+
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
 
   const renderTable = () => {
     if (selectedButton === 'UnderGraduate') {
@@ -21,7 +29,17 @@ function UnderDashboard() {
             </tr>
           </thead>
           <tbody>
-            {/* Insert your data rows here */}
+          {undergraduate.map((student) => (
+            (localStorage.getItem('email') === data.email) ? (
+              <tr key={student.id}>
+                <td className='text-center p-5 pt-8'>{student.id}</td>
+                <td className='text-center p-5 pt-8'>{student.Name}</td>
+                <td className='text-center p-5 pt-8'>{student.Nic}</td>
+                <td className='text-center p-5 pt-8'>{student.RegisterDate}</td>
+                <td className='text-center p-5 pt-8'>{student.U_id}</td>
+              </tr>
+            ) : null
+          ))}
           </tbody>
         </table>
       );
@@ -38,7 +56,17 @@ function UnderDashboard() {
             </tr>
           </thead>
           <tbody>
-            {/* Insert your data rows here */}
+          {Employee.map((employee) => (
+            (localStorage.getItem('email') === data.email) ? (
+              <tr className='' key={employee.id} >
+                <td className='text-center p-6 pt-7'>{employee.id}</td>
+                <td className='text-center p-6 pt-7'>{employee.Name}</td>
+                <td className='text-center p-6 pt-7'>{employee.R_num}</td>
+                <td className='text-center p-6 pt-7'>{employee.R_date}</td>
+                <td className='text-center p-6 pt-7'>{employee.BR_id}</td>
+              </tr>
+            ) : null
+          ))}
           </tbody>
         </table>
       );
@@ -76,6 +104,7 @@ function UnderDashboard() {
           <div className='w-2/3 border border-gray-600'>
           <div className='flex flex-wrap my-2 h-[200px] mt-6 mx-3 
           '>
+          
             <div className='w-1/3 my-5 p-6 bg-white shadow-xl px-3 text-center mx-auto border border-gray-800'>
               <h1 className='text-sky-500 text-5xl px-4 py-3 '> 2,112</h1>
               <h3 className='text-gray-800'> Users Registered </h3>
@@ -85,6 +114,7 @@ function UnderDashboard() {
             <h1 className='text-sky-500 text-xl px-4'> Graphic Designer</h1>
               {DisplayText()}
             </div>
+            <button class="bg-blue-500 h-[40px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer" onClick={()=> logout() }>LogOut</button>
           </div>
             {renderTable()}
           </div>

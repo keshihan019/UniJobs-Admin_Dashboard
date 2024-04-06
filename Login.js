@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import LoginImg from "../images/mobile-login-concept-illustration_114360-83.avif"
+import {data} from "../Utils/DummyDataSet"
 
 function Login() {
   const [formDataObject, setFormDataObject] = useState({
@@ -14,11 +15,19 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    console.log('Server response:', formDataObject);
     try {
-      const response = await axios.post('API PATH', formDataObject);
-      console.log('Server response:', response.data);
-    } catch (error) {
+      // const response = await axios.post('API PATH', formDataObject);
+      if(formDataObject.email === data.email && formDataObject.password === data.password) {
+          window.alert(data.message);
+          localStorage.setItem('email', formDataObject.email);
+          window.location.href = "/under-dashboard";
+      }
+      else {
+        window.alert("Invalid Credentials");
+      }
+      } catch (error) {
       console.error('Error submitting form:', error);
     }
   };
